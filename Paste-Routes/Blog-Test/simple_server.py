@@ -17,5 +17,5 @@ def application(environ, start_response):
 
     return response_body
 
-httpd = make_server('20.0.0.11', 8080, application)
+httpd = make_server('10.0.0.2', 8080, application)
 httpd.serve_forever()
