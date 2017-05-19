@@ -2,6 +2,7 @@
 #coding=utf-8
 from routes import Mapper
 from routes import middleware
+from webob import Response
 import webob.dec
 from wsgiref.simple_server import make_server
 
@@ -49,12 +50,12 @@ class appclass(object):
     def __init__(self):
         a = controller()
         map = Mapper()
-        map.resource('message', 'messages', controller=a)
-                     #path_prefix='/{projectid}', name_prefix='lala_',
+        map.resource('message', 'messages', controller=a, #name_prefix='lala_',
+                     #path_prefix='/{projectid}',
                      #collection={'list_many': 'GET', 'create_many': 'POST'},
                      #member={'update_many': 'POST', 'delete_many': 'POST'},
-                     #new={'preview' : 'POST'},
-                     #parent_resource=dict(member_name="haha", collection_name="heihei"))
+                     #new={'preview' : 'POST'})
+                     parent_resource=dict(member_name='item', collection_name='items'))
         self.route = middleware.RoutesMiddleware(self.dispatch, map)
 
     @webob.dec.wsgify
@@ -81,5 +82,5 @@ class appclass(object):
 
 if __name__ == "__main__":
     app = appclass()
-    server = make_server('10.0.0.2', 8080, app)
+    server = make_server('20.0.0.51', 8888, app)
     server.serve_forever()
